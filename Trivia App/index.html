@@ -5,26 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia Game</title>
-    <link href="style.css" rel="stylesheet" media="all" />
+    <link href="style.css" rel="stylesheet" media="all"/>
 </head>
 <body>
     <h1 class="title">Trivia Game</h1>
-    <div class="rules">
-        <p>
+    
+    <div class="rules-container">
+        <p class="rules">
             So you think you’re the master of trivia, huh? You want that title? You gotta prove it. Get through all the questions and maaaaaaybe you can be the master of trivia. Here’s how it works: You gotta hit start, first off. But then there’ll be a question on the next page. Put your answer in the field. If you think you’re so smart and you got it, hit start. If you’re right, you get one point. If you’re wrong…well sucks for you ‘cause you’ll be back to square one! Think carefully. You don’t want to lose, do you?
         </p>
-    </div>
-    <!-- <div class="category">
-    <h2 class="categoryTitle">Category:</h2>
-    </div> -->
-    <div>
+    
         <p>
             Now are you ready or what? You can totally do this. Hit the start button when you’re ready!
         </p>
-    </div>
-    <a href="../Second Page/index.html">
+    
     <button id="start">Start</button>
-    </a>
+    </div>
+    
+    <div class="game-container" style="display: none">
+    <div class="category">
+        <h2 class="categoryTitle">Category:</h2>
+    </div>
+    <div class="scoreboard">
+        <h2>Scoreboard</h2>
+    </div>
+    <div class="question">
+        <h2>Question</h2>
+    </div>
+    <div class="answerInput">
+        <h3>Your Answer:</h3>
+        <input class="answer"></input>
+        <button id="submit">Submit Answer</button>
+    </div>
+    <div class="result"></div>
+    </div>
     <script src="code.js"></script>
+    
 </body>
 </html>
