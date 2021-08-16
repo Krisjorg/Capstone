@@ -8,12 +8,16 @@ document.querySelector("#start").addEventListener("click", function(event) {
     document.querySelector(".game-container").style.display = "block"
 })
 
+
+
 let scoreboard = document.querySelector(".scoreboard")
 let points = document.createElement("p")
-let totalScore = 0
+
 points.classList = "points"
-points.innerHTML = `Total Score: ${totalScore}`
+points.innerHTML = `Total Score: `
 scoreboard.append(points)
+
+
 
 
 class gameCreation {
@@ -23,9 +27,11 @@ class gameCreation {
         this.categoryId = 0
         this.questionList = []
         this.currentIndex = 0
+        this.totalScore = 0
         
-        document.querySelector("#submit").addEventListener("click", this.displayNextQuestion.bind(this))
+        document.querySelector("#submit").addEventListener("click", this.pickQuestion.bind(this))
         // this.randomNumber = this.selectRandomNumber()
+        
     }
 
 
@@ -55,19 +61,55 @@ class gameCreation {
     
     }
 
-    pickQuestion() {
+    createFirstQuestion() {
         let question = this.questionList[this.currentIndex].question
-        
-       
         let questionDiv = document.querySelector(".question")
         questionDiv.innerHTML = ""
         let chosenQuestion = document.createElement("p")
         chosenQuestion.classList = "currentQuestion"
         chosenQuestion.innerHTML = question
         questionDiv.append(chosenQuestion)
-       
-        this.checkAnswer()
+        let answer = this.questionList[this.currentIndex].answer
+        console.log(answer)
+    }
 
+    pickQuestion() {
+        let answer = this.questionList[this.currentIndex].answer
+        console.log(answer)
+        let input = document.querySelector(".answer")
+        console.log(this.currentIndex)
+        
+        if (this.currentIndex <= 100) {
+            this.currentIndex += 1
+            }
+    
+            if (this.currentIndex === 101) {
+                let winMessage = document.createElement("p")
+                winMessage.innerHTML = "You Win!! You're a trivia master!"
+                document.body.append(winMessage)
+            }
+
+            if (answer === input.value) {
+                console.log("correct!")
+                this.totalScore += 1
+                
+                } 
+        
+                if (answer !== input.value) {
+                    console.log("wrong")
+                    this.totalScore = 0
+                }
+    
+            
+        let question = this.questionList[this.currentIndex].question
+        let nextanswer = this.questionList[this.currentIndex].answer
+        console.log(nextanswer)
+        let questionDiv = document.querySelector(".question")
+        let chosenQuestion = document.querySelector(".currentQuestion")
+        chosenQuestion.innerHTML = question
+        questionDiv.append(chosenQuestion)
+        console.log(question)
+        this.updateScoreboard()
     }
 
     //save question List
@@ -77,23 +119,8 @@ class gameCreation {
         for (let index = 0; index < response.clues.length; index ++) {
             this.questionList.push(questionList[index])
         }
-        this.pickQuestion()
+        this.createFirstQuestion()
         return this.questionList
-    }
-
-    displayNextQuestion() {
-        if (this.currentIndex <= 100) {
-            this.currentIndex += 1
-        }
-
-        if (this.currentIndex === 101) {
-            let winMessage = document.createElement("p")
-            winMessage.innerHTML = "You Win!! You're a trivia master!"
-            document.body.append(winMessage)
-        }
-        
-        this.pickQuestion(this.currentIndex)
-    
     }
     
     //fetch questions
@@ -110,13 +137,9 @@ class gameCreation {
     selectRandomCategory(response) {
         
         let randomNumber = this.selectRandomNumber()
-        
         this.object = response[randomNumber]
         let categoryId = Object.values(this.object)
         this.categoryId = categoryId[10].id
-        
-        
-        // console.log(randomKey)
         this.createCategory()
         this.getQuestionsForCategory()
         return this.categoryId = categoryId[10].id
@@ -131,72 +154,40 @@ class gameCreation {
 
     updateScoreboard() {
         
-       
-        let answerListener = document.querySelector("#submit")
-        answerListener.addEventListener("click", function(event) {
-            event.preventDefault()
         let getPoints = document.querySelector(".points")
         let scoreboard = document.querySelector(".scoreboard")
-        if (totalScore === 0) {
-            getPoints.innerHTML = `Total Score: ${totalScore}`
-            scoreboard.append(points)
-        } else {
-            getPoints.innerHTML = `Total Score: ${totalScore}`
+            getPoints.innerHTML = `Total Score: ${this.totalScore}`
             scoreboard.append(getPoints)
+        if (this.totalScore === 0) {
+            this.gameOver()
         }
+        
+    }
+
+    gameOver() {
+        let result = document.querySelector(".game-over")
+        document.querySelector(".game-container").style.display = "none"
+        result.style.display = "block"
+        let startOverButton = document.querySelector("#restart")
+        startOverButton.style.display = "block"
+        
+        let gameOverMessage = document.querySelector(".message")
+        gameOverMessage.innerHTML = "Oh, no! You got a question wrong! Well, better hit the books and study up. Your score is reset. Try, try again!"
+        result.append(gameOverMessage)
+        
+        startOverButton.innerHTML = "Start Over"
+        result.append(startOverButton)
+
+        startOverButton.addEventListener("click", function(event) {
+            event.preventDefault()
+        document.querySelector(".game-over").style.display = "none"
+        document.querySelector(".rules-container").style.display = "block"
+        playGame.fetchRequest()
+        
         })
     }
 
-    checkAnswer() {
-         
-        let correctAnswer = this.questionList[this.currentIndex].answer
-        console.log(correctAnswer)
-        
-        let result = document.querySelector(".result")
-        let answerResponse = document.createElement("p")
-        
-        let answerListener = document.querySelector("#submit")
-        let userInput = document.querySelector(".answer")
-        
-        let currentQuestion = document.querySelector(".currentQuestion")
-        result.innerHTML = ""
-        answerListener.addEventListener("click", function(event) {
-            event.preventDefault()
-            
-            if (userInput.value === correctAnswer) {
-                totalScore += 1
-                
-                
-                
-                answerResponse.innerHTML = "You got it right! On to the next question!"
-                //result.append(answerResponse)
-               // userInput.value = ""
-               // currentQuestion.innerHTML = ""
-                
-                console.log(totalScore)
-                
-                
-            } else if (userInput.value !== correctAnswer) {
-                totalScore = 0
-                
-                
-                answerResponse.innerHTML = "That’s not right… Well, better hit the books and study up. Your score is reset. Try, try again!"
-                //result.append(answerResponse)
-                
-                //currentQuestion.innerHTML = ""
-                
-                console.log(totalScore)
-            }
-            result.append(answerResponse)
-        })
-        this.updateScoreboard()
-    }
 }
 
 let playGame = new gameCreation()
 playGame.fetchRequest()
-
-// let answerListener = document.querySelector("#submit")
-// console.group(answerListener)
-// answerListener.addEventListener("click", playGame.checkAnswer())
-//hello
