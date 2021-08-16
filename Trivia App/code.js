@@ -54,7 +54,7 @@ class gameCreation {
         .join(" ")
         
         let heading = document.querySelector(".category")
-        let chosenCategory = document.createElement("p")
+        let chosenCategory = document.querySelector(".chosenCategory")
         chosenCategory.innerHTML = category
         heading.append(chosenCategory)
         return this.objectCategory = categoryList
@@ -76,28 +76,30 @@ class gameCreation {
     pickQuestion() {
         let answer = this.questionList[this.currentIndex].answer
         console.log(answer)
+        
         let input = document.querySelector(".answer")
+        //input = input.value
         console.log(this.currentIndex)
         
         if (this.currentIndex <= 100) {
             this.currentIndex += 1
             }
     
-            if (this.currentIndex === 101) {
+            if (this.totalScore === 100) {
                 let winMessage = document.createElement("p")
                 winMessage.innerHTML = "You Win!! You're a trivia master!"
                 document.body.append(winMessage)
             }
 
-            if (answer === input.value) {
+            if (answer.toLowerCase() === input.value.toLowerCase()) {
                 console.log("correct!")
                 this.totalScore += 1
+                input.value = ""
                 
-                } 
-        
-                if (answer !== input.value) {
+                } else if (answer !== input.value.toLowerCase()) {
                     console.log("wrong")
                     this.totalScore = 0
+                    input.value = ""
                 }
     
             
@@ -156,15 +158,24 @@ class gameCreation {
         
         let getPoints = document.querySelector(".points")
         let scoreboard = document.querySelector(".scoreboard")
-            getPoints.innerHTML = `Total Score: ${this.totalScore}`
-            scoreboard.append(getPoints)
+        getPoints.innerHTML = `Total Score: ${this.totalScore}`
+        scoreboard.append(getPoints)
+        
+        
+        let result = document.querySelector(".result")
+        let resultMessage = document.querySelector(".resultMessage")
+        resultMessage.innerHTML = "You got the answer right! You've been awarded 1 point. Keep up the good work!"
+        result.append(resultMessage)
         if (this.totalScore === 0) {
             this.gameOver()
         }
-        
+        setInterval(function() {
+            resultMessage.innerHTML = ""
+        }, 3000)
     }
 
     gameOver() {
+        this.currentIndex = 0
         let result = document.querySelector(".game-over")
         document.querySelector(".game-container").style.display = "none"
         result.style.display = "block"
@@ -177,13 +188,12 @@ class gameCreation {
         
         startOverButton.innerHTML = "Start Over"
         result.append(startOverButton)
-
+        
         startOverButton.addEventListener("click", function(event) {
             event.preventDefault()
-        document.querySelector(".game-over").style.display = "none"
-        document.querySelector(".rules-container").style.display = "block"
-        playGame.fetchRequest()
-        
+            document.querySelector(".game-over").style.display = "none"
+            document.querySelector(".rules-container").style.display = "block"
+            playGame.fetchRequest()
         })
     }
 
