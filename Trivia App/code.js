@@ -28,6 +28,7 @@ class gameCreation {
         this.questionList = []
         this.currentIndex = 0
         this.totalScore = 0
+        this.randomNumber = 0
         
         document.querySelector("#submit").addEventListener("click", this.pickQuestion.bind(this))
         // this.randomNumber = this.selectRandomNumber()
@@ -62,23 +63,28 @@ class gameCreation {
     }
 
     createFirstQuestion() {
-        let question = this.questionList[this.currentIndex].question
+        this.randomNumber = Math.floor(Math.random() * this.questionList.length)
+        
+        let question = this.questionList[this.randomNumber].question
         let questionDiv = document.querySelector(".question")
         questionDiv.innerHTML = ""
         let chosenQuestion = document.createElement("p")
         chosenQuestion.classList = "currentQuestion"
         chosenQuestion.innerHTML = question
         questionDiv.append(chosenQuestion)
-        let answer = this.questionList[this.currentIndex].answer
+        let answer = this.questionList[this.randomNumber].answer
         console.log(answer)
+        return this.randomNumber
     }
 
     pickQuestion() {
-        let answer = this.questionList[this.currentIndex].answer
+        
+       
+        let answer = this.questionList[this.randomNumber].answer
         console.log(answer)
         
         let input = document.querySelector(".answer")
-        //input = input.value
+        
         console.log(this.currentIndex)
         
         if (this.currentIndex <= 100) {
@@ -101,10 +107,13 @@ class gameCreation {
                     this.totalScore = 0
                     input.value = ""
                 }
-    
-            
-        let question = this.questionList[this.currentIndex].question
-        let nextanswer = this.questionList[this.currentIndex].answer
+                console.log(this.randomNumber)
+                this.questionList.splice([this.randomNumber], 1)
+                this.randomNumber = Math.floor(Math.random() * this.questionList.length)
+                
+                console.log(this.questionList)
+        let question = this.questionList[this.randomNumber].question
+        let nextanswer = this.questionList[this.randomNumber].answer
         console.log(nextanswer)
         let questionDiv = document.querySelector(".question")
         let chosenQuestion = document.querySelector(".currentQuestion")
@@ -112,6 +121,8 @@ class gameCreation {
         questionDiv.append(chosenQuestion)
         console.log(question)
         this.updateScoreboard()
+        return this.questionList
+
     }
 
     //save question List
@@ -122,6 +133,7 @@ class gameCreation {
             this.questionList.push(questionList[index])
         }
         this.createFirstQuestion()
+        console.log(this.questionList)
         return this.questionList
     }
     
@@ -172,6 +184,7 @@ class gameCreation {
         setInterval(function() {
             resultMessage.innerHTML = ""
         }, 3000)
+        
     }
 
     gameOver() {
@@ -183,9 +196,14 @@ class gameCreation {
         startOverButton.style.display = "block"
         
         let gameOverMessage = document.querySelector(".message")
+
+        if (this.questionList === []) {
+            gameOverMessage.innerHTML = "You win! You're a trivia master!"
+        } else {
         gameOverMessage.innerHTML = "Oh, no! You got a question wrong! Well, better hit the books and study up. Your score is reset. Try, try again!"
+        }
         result.append(gameOverMessage)
-        
+    
         startOverButton.innerHTML = "Start Over"
         result.append(startOverButton)
         
