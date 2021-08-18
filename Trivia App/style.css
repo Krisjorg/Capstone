@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+
+body {
+   
+    font-family: 'Verdana', sans-serif;
+    margin: 10px 50px 50px 50px;
+    background-image: url("background1.png");
+    background-color: #65BFAF;
+    color: #044A59;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Bungee', cursive; 
+    font-size: 3em;
+    border: 25px double #BF1F49;
+    /* border-radius: 100px; */
+    color: #65BFAF;
+    background-color: #044A59;
+    background-image: radial-gradient(closest-side, transparent 98%, rgba(0,0,0,.3) 99%),
+    radial-gradient(closest-side, transparent 98%, rgba(0,0,0,.3) 99%);
+    background-size:80px 80px;
+    background-position:0 0, 40px 40px;
+
+}
+
+.rules-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #F2F2F2;
+    width: 75%;
+    margin: auto;
+    border-radius: 90px;
+    padding: 20px;
+    border: 20px solid #044A59;
+    
+}
+
+#start {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.game-container {
+    margin: auto;
+}
+
+.category {
+    background-color: #F2F2F2;
+    padding: 25px 5px 25px 15px;
+    margin: 5px;
+    width: 45%;
+    border: 10px solid #044A59;
+}
+
+.categoryTitle {
+    color: #BF1F49;
+    font-family: 'Bungee', cursive; 
+}
+
+.scoreboard {
+    
+    background-color: #044A59;
+    padding: 200px 0px 200px 0px;
+    margin: 5px;
+    width: 40%;
+    float: right;
+    text-align: center;
+    border: 40px double #65BFAF;
+    
+    color: #65BFAF;
+    
+}
+
+.scoreboard-header {
+    font-family: 'Bungee', cursive; 
+}
+
+
+.question-box {
+    background-color: #F2F2F2;
+    padding: 25px 5px 25px 15px;
+    margin: 5px;
+    width: 45%;
+    border: 10px solid #044A59;
+    
+}
+
+.question-header {
+    font-family: 'Bungee', cursive; 
+    color: #BF1F49;
+}
+
+.answer-input {
+    background-color: #F2F2F2;
+    padding: 25px 5px 25px 15px;
+    margin: 5px;
+    width: 45%;
+    border: 10px solid #044A59;
+}
+
+.answer-header {
+    font-family: 'Bungee', cursive; 
+    color: #BF1F49;
+}
+
+.resultMessage {
+    font-family: 'Bungee', cursive; 
+    color: #044A59;
+    text-align: center;
+}
+
+.game-over {
+    margin: auto;
+    background-color: #F2F2F2;
+    padding: 20px 30px 20px 30px;
+    width: 50%;
+    border: 20px solid #BF1F49;
+    border-radius: 100px;
+    filter: drop-shadow(0px 10px 0px #044A59);
+}
+
+#restart {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sad-face {
+    margin: 50px auto;
+    width: 300px;
+    border: 20px solid #044A59;
+    
+}
+
+
+
+

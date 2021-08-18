@@ -8,17 +8,12 @@ document.querySelector("#start").addEventListener("click", function(event) {
     document.querySelector(".game-container").style.display = "block"
 })
 
-
-
 let scoreboard = document.querySelector(".scoreboard")
 let points = document.createElement("p")
 
 points.classList = "points"
-points.innerHTML = `Total Score: `
+points.innerHTML = `Total Score: 0`
 scoreboard.append(points)
-
-
-
 
 class gameCreation {
     constructor () {
@@ -31,10 +26,7 @@ class gameCreation {
         this.randomNumber = 0
         
         document.querySelector("#submit").addEventListener("click", this.pickQuestion.bind(this))
-        // this.randomNumber = this.selectRandomNumber()
-        
     }
-
 
     //function to pick a random number between 1 and 100
     selectRandomNumber() {
@@ -46,10 +38,7 @@ class gameCreation {
     createCategory() {
         
         let categoryList = Object.values(this.object)
-    
-        
         let category = categoryList[10].title
-        
         category = category.split(" ")
         .map((string) => string.charAt(0).toUpperCase() + string.substring(1))
         .join(" ")
@@ -79,7 +68,6 @@ class gameCreation {
 
     pickQuestion() {
         
-       
         let answer = this.questionList[this.randomNumber].answer
         console.log(answer)
         
@@ -110,8 +98,12 @@ class gameCreation {
                 console.log(this.randomNumber)
                 this.questionList.splice([this.randomNumber], 1)
                 this.randomNumber = Math.floor(Math.random() * this.questionList.length)
+                if (this.questionList.length === 0) {
+                    this.gameOver()
+                } else {
                 
                 console.log(this.questionList)
+                
         let question = this.questionList[this.randomNumber].question
         let nextanswer = this.questionList[this.randomNumber].answer
         console.log(nextanswer)
@@ -122,7 +114,7 @@ class gameCreation {
         console.log(question)
         this.updateScoreboard()
         return this.questionList
-
+                }
     }
 
     //save question List
@@ -167,23 +159,23 @@ class gameCreation {
     }
 
     updateScoreboard() {
-        
         let getPoints = document.querySelector(".points")
         let scoreboard = document.querySelector(".scoreboard")
         getPoints.innerHTML = `Total Score: ${this.totalScore}`
         scoreboard.append(getPoints)
-        
-        
+
         let result = document.querySelector(".result")
         let resultMessage = document.querySelector(".resultMessage")
         resultMessage.innerHTML = "You got the answer right! You've been awarded 1 point. Keep up the good work!"
         result.append(resultMessage)
+        
         if (this.totalScore === 0) {
             this.gameOver()
         }
+
         setInterval(function() {
             resultMessage.innerHTML = ""
-        }, 3000)
+        }, 5000)
         
     }
 
@@ -192,18 +184,25 @@ class gameCreation {
         let result = document.querySelector(".game-over")
         document.querySelector(".game-container").style.display = "none"
         result.style.display = "block"
+        let gif = document.querySelector(".sad-face")
+        
         let startOverButton = document.querySelector("#restart")
         startOverButton.style.display = "block"
-        
+        let scoreResult = document.querySelector(".score-result")
         let gameOverMessage = document.querySelector(".message")
+        let scoreboardReset = document.querySelector(".points")
+        scoreboardReset.innerHTML = `Total Score: 0`
 
-        if (this.questionList === []) {
-            gameOverMessage.innerHTML = "You win! You're a trivia master!"
+        if (this.questionList.length === 0) {
+            gameOverMessage.innerHTML = "<h2>You win! You're a trivia master!</h2><p>Hit the Start Over button to start a new game!</p>"
+            scoreResult.innerHTML = `Your final score is ${this.totalScore} points!` 
         } else {
         gameOverMessage.innerHTML = "Oh, no! You got a question wrong! Well, better hit the books and study up. Your score is reset. Try, try again!"
+        gif.style.display = "block"
         }
+
+        result.append(scoreResult)
         result.append(gameOverMessage)
-    
         startOverButton.innerHTML = "Start Over"
         result.append(startOverButton)
         
@@ -211,8 +210,11 @@ class gameCreation {
             event.preventDefault()
             document.querySelector(".game-over").style.display = "none"
             document.querySelector(".rules-container").style.display = "block"
+            gif.style.display = "none"
             playGame.fetchRequest()
+
         })
+        return this.totalScore = 0
     }
 
 }

@@ -8,7 +8,7 @@
     <link href="style.css" rel="stylesheet" media="all"/>
 </head>
 <body>
-    <h1 class="title">Trivia Game</h1>
+    <h1 class="title">Trivia Master</h1>
     
     <div class="rules-container">
         <p class="rules">
@@ -23,20 +23,23 @@
     </div>
     
     <div class="game-container" style="display: none">
+        <div class="scoreboard">
+            <h2 class="scoreboard-header">Scoreboard</h2>
+        </div>
         <div class="category">
             <h2 class="categoryTitle">Category:</h2>
             <p class="chosenCategory"></p>
         </div>
-        <div class="scoreboard">
-            <h2>Scoreboard</h2>
+        
+        <div class="question-box">
+            <h2 class="question-header">Question:</h2>
+            <p class="question"></p>
         </div>
-            <h2>Question</h2>
-        <div class="question">    
-        </div>
-        <div class="answerInput">
-            <h3>Your Answer:</h3>
+        <div class="answer-input">
+            <h2 class="answer-header">Your Answer:</h2>
             <input class="answer"></input>
             <button id="submit">Submit Answer</button>
+            
         </div>
         <div class="result">
             <p class="resultMessage"></p>
@@ -44,9 +47,13 @@
         </div>
 
     <div class="game-over" style="display: none">
+        
+        <p class="score-result"></p>
         <p class="message"></p>
         <button id="restart">Start Over</button>
+        
     </div>
+    <img class="sad-face" style="display: none" src="https://media.giphy.com/media/R15WrVMPBakLK/giphy.gif" />
     <script src="code.js"></script>
     
 </body>
